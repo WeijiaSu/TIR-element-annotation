@@ -145,3 +145,17 @@ accu,matrix=BestModel(bestParameter)
 print("accuracy: "+ str(accu))
 print("confusion matrix:")
 print(matrix)
+
+
+# ================================== Best Model ===========================================
+# Use Best Parameter: [200, 'gini', None, 'True']
+# accuracy: 0.9340746624305004
+# confusion matrix:
+# col_0   DTA  DTC  DTH  DTM  DTT  NonTIR
+# Target
+# DTA     190    0    3    2    0       5
+# DTC       9  180    0    0    2       6
+# DTH       2    0  191    2    4       1
+# DTM       2    1    4  191    0       2
+# DTT       4    1   14    2  179       0
+# NonTIR    2    1   13    0    1     245
