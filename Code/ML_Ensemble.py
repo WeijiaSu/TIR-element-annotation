@@ -21,11 +21,11 @@ def warn(*args, **kwargs):
 warnings.warn = warn
 warnings.filterwarnings("ignore")
 
-# train = pd.read_csv('/Users/weijiasu/Dropbox/Research/BioinformaticsProject/TE_ML/MaizeData/MaizeTrain0710.csv',header=0)
-# test = pd.read_csv('/Users/weijiasu/Dropbox/Research/BioinformaticsProject/TE_ML/MaizeData/MaizeTest0710.csv', header=0)
+train = pd.read_csv('/work/LAS/thomasp-lab/weijia/research/MLDataSet/MaizeTrain0710.csv',header=0)
+test = pd.read_csv('/work/LAS/thomasp-lab/weijia/research/MLDataSet/MaizeTest0710.csv', header=0)
 
-train = pd.read_csv('/Users/weijiasu/Dropbox/Research/BioinformaticsProject/TE_ML/SorghumData/SorghumTrain_0712.csv',header=0)
-test = pd.read_csv('/Users/weijiasu/Dropbox/Research/BioinformaticsProject/TE_ML/SorghumData/SorghumTest_0712.csv', header=0)
+#train = pd.read_csv('/Users/weijiasu/Dropbox/Research/BioinformaticsProject/TE_ML/SorghumData/SorghumTrain_0712.csv',header=0)
+#test = pd.read_csv('/Users/weijiasu/Dropbox/Research/BioinformaticsProject/TE_ML/SorghumData/SorghumTest_0712.csv', header=0)
 
 all=train.append(test,ignore_index=True)
 
@@ -65,8 +65,6 @@ def knn(nb, w, a, s):
     return results.mean()
 
 
-# [0.9615253596788229, 3, 'distance', 'ball_tree', 'True']
-# knn(3, 'distance', 'ball_tree','True')
 
 nb = [3, 5, 10, 30, 50, 70]
 w = ['uniform', 'distance']
@@ -88,7 +86,6 @@ def knntune(nb, w, a, b):
     print(result)
 
 
-# knntune(nb, w, al, sc)
 
 seed = 7
 
@@ -111,38 +108,19 @@ def en5(file,vo, w, s, num):
     ensemblecf = VotingClassifier(
         estimators=[('nn', m1), ('knn', m2), ('rf', m3), ('ada', m4)], voting=vo,
         weights=w)
-    # results = cross_val_score(ensemblecf, trx, trainy, cv=10)
-    # var = np.var(results)
-    # print('Variance:',var)
-    # ensemblecf = ensemblecf.fit(trx, ty)
-    result = ensemblecf.score(tex, testy)
+    ensemblecf = ensemblecf.fit(trx, ty)
     pre = ensemblecf.predict(toprex)
     p = pd.DataFrame(pre,columns=['prediction'])
     r = pd.DataFrame(topre['ID']).join(p)
     r.to_csv('prediction_chr_'+str(num)+'.csv',index=None)
 
-    # print('=================================================')
-    # if w == None:
-    #     print('Model Name: Unweighted Ensemble of 4-Classifier\nAccuracy:', results.mean())
-    #     print('Best Model Parameter(s):\n- voting:', vo, '\n- weights:', w,'\n- Scale:',s)
-    #     print(pd.crosstab(pre, testy))
-    # else:
-    #     print('Model Name: Weighted Ensemble of 4-Classifier\nCV Accuracy:', results.mean())
-    #     print('Best Model Parameter(s):\n- voting:', vo, '\n- weights:', w,'\n- Scale:',s)
-    #     print(pd.crosstab(pre, testy))
-    #     print('=================================================')
-    # print('cv result: ' + str(results.mean()))
-    # print('test result: ' + str(result))
-    # return results.mean()
 
-# os.chdir("/Users/weijiasu/Dropbox/Research/BioinformaticsProject/TE_ML/SorghumData/Prediction0712/")
-# for i in range(1,11):
-#     print("predicting chr %s"%(i))
-#     t = time.time()
-#     en5("chr%s_NonHomoToPre.csv"%(i),'soft', [1, 1, 2, 1], 'False', i)
-#     print("chr %s finished, time:"%(i)+str(time.time() - t))
+for i in range(1,11):
+    print("predicting chr %s"%(i))
+    t = time.time()
+    en5("chr%s_NonHomoToPre.csv"%(i),'soft', [1, 1, 2, 1], 'False', i)
+    print("chr %s finished, time:"%(i)+str(time.time() - t))
 
-# print(time.time()-t)
 
 
 vo = ['hard', 'soft']
@@ -164,15 +142,6 @@ def eutune(vo, w, sc):
     print(result)
 
 
-# eutune(vo, w5, s)
-# [[0.9513779458942666, 'soft', [1, 1, 1, 1]]]
-# [[0.9006495768519136, 'soft', [10, 4, 1, 4], 'True']]
-
-
-# Best Model Parameter(s):
-# - voting: soft
-# - weights: [1, 1, 2, 1]
-# - Scale: False
 
 def nn(parameter):
     trx = trainx
@@ -199,10 +168,6 @@ def nn(parameter):
     return results.mean()
 
 
-# nn([(100, 100), 'relu', 'constant', 0.01, 0.1, 'True'])
-# nn([(30, 100), 'tanh', 'adaptive', 0.001, 0.9, 'True'])
-
-
 size = [(10, 10), (100, 100), (30, 100)]
 act = ['tanh', 'relu']
 lr = ['constant', 'adaptive']
@@ -225,3 +190,5 @@ def nntune(size, act, lr, lri, mo, scale):
                                 max = temp
                                 result.append([max, i, j, k, a, b, c])
     print(result)
+
+
