@@ -22,7 +22,7 @@ There are three modules in TIR-Learner.
 ## Usage
 1. Install blast+ program following the instruction: https://www.ncbi.nlm.nih.gov/books/NBK279690/
 
-2. Install GRF following the instruction: (https://github.com/weijiaweijia/GenericRepeatFinder)
+2. Install GRF following the instruction: (https://github.com/bioinfolabmu/GenericRepeatFinder)
 
 3. Make sure the following python3 packages are installed:
 (1)BioPython
@@ -217,7 +217,7 @@ rm -r $genomeName
 
 
 echo "############################################################ TIR-Learner is finished! ###########################################################"
-#
+
 
 
 ```
